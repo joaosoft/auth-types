@@ -6,16 +6,16 @@ import (
 	"crypto/rsa"
 )
 
-type SignatureRSA struct {
+type signatureRSA struct {
 	Name string
 	Hash crypto.Hash
 }
 
-func (sg *SignatureRSA) Algorithm() string {
+func (sg *signatureRSA) Algorithm() string {
 	return sg.Name
 }
 
-func (sg *SignatureRSA) Verify(signatureString, signature string, key interface{}) error {
+func (sg *signatureRSA) Verify(signatureString, signature string, key interface{}) error {
 	var err error
 
 	var sig []byte
@@ -39,7 +39,7 @@ func (sg *SignatureRSA) Verify(signatureString, signature string, key interface{
 	return rsa.VerifyPKCS1v15(rsaKey, sg.Hash, hasher.Sum(nil), sig)
 }
 
-func (sg *SignatureRSA) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *signatureRSA) Signature(signatureString string, key interface{}) (string, error) {
 	var rsaKey *rsa.PrivateKey
 	var ok bool
 

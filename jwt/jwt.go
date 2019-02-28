@@ -27,7 +27,7 @@ type Token struct {
 	signature string                 `json:"signature"`
 
 	claims Claims
-	method signatureMethod
+	method isignature
 }
 
 func New(signature signature) *Token {

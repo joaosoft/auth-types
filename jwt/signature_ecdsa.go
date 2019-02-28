@@ -8,18 +8,18 @@ import (
 )
 
 
-type SignatureECDSA struct {
+type signatureECDSA struct {
 	Name      string
 	Hash      crypto.Hash
 	KeySize   int
 	CurveBits int
 }
 
-func (sg *SignatureECDSA) Algorithm() string {
+func (sg *signatureECDSA) Algorithm() string {
 	return sg.Name
 }
 
-func (sg *SignatureECDSA) Verify(signatureString, signature string, key interface{}) error {
+func (sg *signatureECDSA) Verify(signatureString, signature string, key interface{}) error {
 	var err error
 
 	var sig []byte
@@ -54,7 +54,7 @@ func (sg *SignatureECDSA) Verify(signatureString, signature string, key interfac
 	}
 }
 
-func (sg *SignatureECDSA) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *signatureECDSA) Signature(signatureString string, key interface{}) (string, error) {
 	var ecdsaKey *ecdsa.PrivateKey
 	switch k := key.(type) {
 	case *ecdsa.PrivateKey:

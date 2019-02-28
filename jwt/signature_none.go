@@ -1,14 +1,14 @@
 package jwt
 
-type SignatureNone struct {
+type signatureNone struct {
 	Name string
 }
 
-func (sg *SignatureNone) Algorithm() string {
+func (sg *signatureNone) Algorithm() string {
 	return sg.Name
 }
 
-func (sg *SignatureNone) Verify(signatureString, signature string, key interface{}) (err error) {
+func (sg *signatureNone) Verify(signatureString, signature string, key interface{}) (err error) {
 	if signature != "" {
 		return ErrorInvalidAuthorization
 	}
@@ -16,6 +16,6 @@ func (sg *SignatureNone) Verify(signatureString, signature string, key interface
 	return nil
 }
 
-func (sg *SignatureNone) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *signatureNone) Signature(signatureString string, key interface{}) (string, error) {
 	return "", nil
 }

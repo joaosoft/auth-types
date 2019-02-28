@@ -5,12 +5,12 @@ import (
 	"crypto/rsa"
 )
 
-type SignatureRSAPSS struct {
-	*SignatureRSA
+type signatureRSAPSS struct {
+	*signatureRSA
 	Options *rsa.PSSOptions
 }
 
-func (sg *SignatureRSAPSS) Verify(signatureString, signature string, key interface{}) error {
+func (sg *signatureRSAPSS) Verify(signatureString, signature string, key interface{}) error {
 	var err error
 
 	var sig []byte
@@ -35,7 +35,7 @@ func (sg *SignatureRSAPSS) Verify(signatureString, signature string, key interfa
 	return rsa.VerifyPSS(rsaKey, sg.Hash, hasher.Sum(nil), sig, sg.Options)
 }
 
-func (sg *SignatureRSAPSS) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *signatureRSAPSS) Signature(signatureString string, key interface{}) (string, error) {
 	var rsaKey *rsa.PrivateKey
 
 	switch k := key.(type) {
