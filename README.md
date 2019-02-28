@@ -7,6 +7,21 @@ Http authentication implementations.
 * basic
 * jwt
 
+## With signatures
+* ES256
+* ES384
+* ES512
+* RS256
+* RS384
+* RS512
+* PS256
+* PS384
+* PS512
+* HS256
+* HS384
+* HS512
+* NONE 
+
 ###### If i miss something or you have something interesting, please be part of this project. Let me know! My contact is at the end.
 
 ## Dependecy Management
