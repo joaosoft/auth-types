@@ -46,15 +46,13 @@ func main() {
 }
 
 func basicAuth() {
-	b := basic.New()
-
 	// generate new token
-	token := b.Generate("joao", "ribeiro")
+	token := basic.Generate("joao", "ribeiro")
 
 	fmt.Printf("Generated Basic Token: %s\n", token)
 
 	// check token
-	ok, err := b.Check(token, func(username string) (*basic.Credentials, error) {
+	ok, err := basic.Check(token, func(username string) (*basic.Credentials, error) {
 		return &basic.Credentials{UserName: "joao", Password: "ribeiro"}, nil
 	})
 
@@ -91,7 +89,7 @@ func jwtAuth() {
 		return false, fmt.Errorf("invalid jwt session token")
 	}
 
-	valid, err := j.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
+	valid, err := jwt.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
 
 	if !valid {
 		panic("then jwt session should be valid")

@@ -12,8 +12,6 @@ var (
 	ErrorInvalidAuthorization = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid authorization")
 )
 
-type BasicAuth struct {}
-
 type KeyFunc func(username string) (*Credentials, error)
 
 type Credentials struct {
@@ -21,11 +19,8 @@ type Credentials struct {
 	Password string `json:"password"`
 }
 
-func New() *BasicAuth {
-	return &BasicAuth{}
-}
 
-func (b *BasicAuth) Check(authorization string, key KeyFunc) (bool, error) {
+func Check(authorization string, key KeyFunc) (bool, error) {
 	authorizationDecoded, err := base64.StdEncoding.DecodeString(authorization)
 	if err != nil {
 		return false, err
@@ -45,6 +40,6 @@ func (b *BasicAuth) Check(authorization string, key KeyFunc) (bool, error) {
 	return false, ErrorInvalidAuthorization
 }
 
-func (b *BasicAuth) Generate(userName string, password string) string {
+func Generate(userName string, password string) string {
 	return base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", userName, password)))
 }

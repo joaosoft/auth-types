@@ -30,12 +30,8 @@ type Token struct {
 	method isignature
 }
 
-func New(signature ...signature) *Token {
-	method := signatureMethods[SignatureHS384]
-
-	if signature != nil && len(signature) > 0 {
-		method = signatureMethods[signature[0]]
-	}
+func New(signature signature) *Token {
+	method := signatureMethods[signature]
 
 	return &Token{
 		headers: map[string]interface{}{
@@ -70,7 +66,7 @@ func (t *Token) Generate(claims Claims, key interface{}) (string, error) {
 	return strings.Join([]string{headerAndClaims, signature}, "."), nil
 }
 
-func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
+func Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
 	token := &Token{raw: tokenString, headers: make(map[string]interface{}), claims: claims}
 
 	split := strings.Split(tokenString, ".")
