@@ -106,7 +106,7 @@ func jwtAuth() {
 > ##### Result:
 ```
 Generated Basic Token: am9hbzpyaWJlaXJv
-Generated JWT Token: eyJhbGciOiJOT05FIiwidHlwIjoiSldUIn0.eyJhZ2UiOjMwLCJuYW1lIjoiam9hbyJ9.
+Generated JWT Token: eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJhZ2UiOjMwLCJuYW1lIjoiam9hbyJ9.IBjoIfFYFyqNIdBGIaZFT9aamswR4Hm0exoULbfZAqgampskcI3pldAz2wOKq1q5
 ```
 
 ## Known issues
