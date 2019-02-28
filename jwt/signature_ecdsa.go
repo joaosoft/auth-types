@@ -15,11 +15,11 @@ type SignatureECDSA struct {
 	CurveBits int
 }
 
-func (m *SignatureECDSA) Algorithm() string {
-	return m.Name
+func (sg *SignatureECDSA) Algorithm() string {
+	return sg.Name
 }
 
-func (m *SignatureECDSA) Verify(signatureString, signature string, key interface{}) error {
+func (sg *SignatureECDSA) Verify(signatureString, signature string, key interface{}) error {
 	var err error
 
 	var sig []byte
@@ -35,16 +35,16 @@ func (m *SignatureECDSA) Verify(signatureString, signature string, key interface
 		return ErrorInvalidAuthorization
 	}
 
-	if len(sig) != 2*m.KeySize {
+	if len(sig) != 2*sg.KeySize {
 		return ErrorInvalidAuthorization
 	}
 
-	r := big.NewInt(0).SetBytes(sig[:m.KeySize])
-	s := big.NewInt(0).SetBytes(sig[m.KeySize:])
+	r := big.NewInt(0).SetBytes(sig[:sg.KeySize])
+	s := big.NewInt(0).SetBytes(sig[sg.KeySize:])
 
-	if !m.Hash.Available() {
+	if !sg.Hash.Available() {
 	}
-	hasher := m.Hash.New()
+	hasher := sg.Hash.New()
 	hasher.Write([]byte(signatureString))
 
 	if verifystatus := ecdsa.Verify(ecdsaKey, hasher.Sum(nil), r, s); verifystatus == true {
@@ -54,7 +54,7 @@ func (m *SignatureECDSA) Verify(signatureString, signature string, key interface
 	}
 }
 
-func (m *SignatureECDSA) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *SignatureECDSA) Signature(signatureString string, key interface{}) (string, error) {
 	var ecdsaKey *ecdsa.PrivateKey
 	switch k := key.(type) {
 	case *ecdsa.PrivateKey:
@@ -63,17 +63,17 @@ func (m *SignatureECDSA) Signature(signatureString string, key interface{}) (str
 		return "", ErrorInvalidAuthorization
 	}
 
-	if !m.Hash.Available() {
+	if !sg.Hash.Available() {
 		return "", ErrorInvalidAuthorization
 	}
 
-	hasher := m.Hash.New()
+	hasher := sg.Hash.New()
 	hasher.Write([]byte(signatureString))
 
 	if r, s, err := ecdsa.Sign(rand.Reader, ecdsaKey, hasher.Sum(nil)); err == nil {
 		curveBits := ecdsaKey.Curve.Params().BitSize
 
-		if m.CurveBits != curveBits {
+		if sg.CurveBits != curveBits {
 			return "", ErrorInvalidAuthorization
 		}
 

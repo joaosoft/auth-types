@@ -5,7 +5,7 @@
   branch = "master"
   name = "github.com/joaosoft/errors"
   packages = ["."]
-  revision = "14ce6b432e14373c6039c7d9fc6141aaec90fdbf"
+  revision = "dd98851e0d4f418b451d921259cfee63f93864dc"
 
 [solve-meta]
   analyzer-name = "dep"

@@ -10,7 +10,7 @@ type SignatureRSAPSS struct {
 	Options *rsa.PSSOptions
 }
 
-func (m *SignatureRSAPSS) Verify(signatureString, signature string, key interface{}) error {
+func (sg *SignatureRSAPSS) Verify(signatureString, signature string, key interface{}) error {
 	var err error
 
 	var sig []byte
@@ -26,16 +26,16 @@ func (m *SignatureRSAPSS) Verify(signatureString, signature string, key interfac
 		return ErrorInvalidAuthorization
 	}
 
-	if !m.Hash.Available() {
+	if !sg.Hash.Available() {
 		return ErrorInvalidAuthorization
 	}
-	hasher := m.Hash.New()
+	hasher := sg.Hash.New()
 	hasher.Write([]byte(signatureString))
 
-	return rsa.VerifyPSS(rsaKey, m.Hash, hasher.Sum(nil), sig, m.Options)
+	return rsa.VerifyPSS(rsaKey, sg.Hash, hasher.Sum(nil), sig, sg.Options)
 }
 
-func (m *SignatureRSAPSS) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *SignatureRSAPSS) Signature(signatureString string, key interface{}) (string, error) {
 	var rsaKey *rsa.PrivateKey
 
 	switch k := key.(type) {
@@ -45,14 +45,14 @@ func (m *SignatureRSAPSS) Signature(signatureString string, key interface{}) (st
 		return "", ErrorInvalidAuthorization
 	}
 
-	if !m.Hash.Available() {
+	if !sg.Hash.Available() {
 		return "", ErrorInvalidAuthorization
 	}
 
-	hasher := m.Hash.New()
+	hasher := sg.Hash.New()
 	hasher.Write([]byte(signatureString))
 
-	if sigBytes, err := rsa.SignPSS(rand.Reader, rsaKey, m.Hash, hasher.Sum(nil), m.Options); err == nil {
+	if sigBytes, err := rsa.SignPSS(rand.Reader, rsaKey, sg.Hash, hasher.Sum(nil), sg.Options); err == nil {
 		return encode(sigBytes), nil
 	} else {
 		return "", err

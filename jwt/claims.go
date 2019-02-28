@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-type claims map[string]interface{}
+type Claims map[string]interface{}
 
-func (c claims) Validate() bool {
+func (c Claims) Validate() bool {
 	now := time.Now().Unix()
 
 	if c.checkExpiredAt(now) && c.checkIssuedAt(now) && c.checkNotBefore(now) {
@@ -18,7 +18,7 @@ func (c claims) Validate() bool {
 	return false
 }
 
-func (c claims) checkExpiredAt(now int64) bool {
+func (c Claims) checkExpiredAt(now int64) bool {
 	if value, ok := c[constClaimsExpiredAtKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {
@@ -33,7 +33,7 @@ func (c claims) checkExpiredAt(now int64) bool {
 	return true
 }
 
-func (c claims) checkIssuedAt(now int64) bool {
+func (c Claims) checkIssuedAt(now int64) bool {
 	if value, ok := c[constClaimsIssuedAtKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {
@@ -47,7 +47,7 @@ func (c claims) checkIssuedAt(now int64) bool {
 	return true
 }
 
-func (c claims) checkNotBefore(now int64) bool {
+func (c Claims) checkNotBefore(now int64) bool {
 	if value, ok := c[constClaimsNotBeforeKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {

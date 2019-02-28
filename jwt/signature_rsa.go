@@ -11,11 +11,11 @@ type SignatureRSA struct {
 	Hash crypto.Hash
 }
 
-func (m *SignatureRSA) Algorithm() string {
-	return m.Name
+func (sg *SignatureRSA) Algorithm() string {
+	return sg.Name
 }
 
-func (m *SignatureRSA) Verify(signatureString, signature string, key interface{}) error {
+func (sg *SignatureRSA) Verify(signatureString, signature string, key interface{}) error {
 	var err error
 
 	var sig []byte
@@ -30,16 +30,16 @@ func (m *SignatureRSA) Verify(signatureString, signature string, key interface{}
 		return ErrorInvalidAuthorization
 	}
 
-	if !m.Hash.Available() {
+	if !sg.Hash.Available() {
 		return ErrorInvalidAuthorization
 	}
-	hasher := m.Hash.New()
+	hasher := sg.Hash.New()
 	hasher.Write([]byte(signatureString))
 
-	return rsa.VerifyPKCS1v15(rsaKey, m.Hash, hasher.Sum(nil), sig)
+	return rsa.VerifyPKCS1v15(rsaKey, sg.Hash, hasher.Sum(nil), sig)
 }
 
-func (m *SignatureRSA) Signature(signatureString string, key interface{}) (string, error) {
+func (sg *SignatureRSA) Signature(signatureString string, key interface{}) (string, error) {
 	var rsaKey *rsa.PrivateKey
 	var ok bool
 
@@ -47,14 +47,14 @@ func (m *SignatureRSA) Signature(signatureString string, key interface{}) (strin
 		return "", ErrorInvalidAuthorization
 	}
 
-	if !m.Hash.Available() {
+	if !sg.Hash.Available() {
 		return "", ErrorInvalidAuthorization
 	}
 
-	hasher := m.Hash.New()
+	hasher := sg.Hash.New()
 	hasher.Write([]byte(signatureString))
 
-	if sigBytes, err := rsa.SignPKCS1v15(rand.Reader, rsaKey, m.Hash, hasher.Sum(nil)); err == nil {
+	if sigBytes, err := rsa.SignPKCS1v15(rand.Reader, rsaKey, sg.Hash, hasher.Sum(nil)); err == nil {
 		return encode(sigBytes), nil
 	} else {
 		return "", err

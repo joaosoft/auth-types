@@ -39,7 +39,7 @@ func (b *BasicAuth) Check(authorization string, key KeyFunc) (bool, error) {
 	}
 
 	if len(split) == 2 && split[0] == credentials.UserName && split[1] == credentials.Password {
-		return false, nil
+		return true, nil
 	}
 
 	return false, ErrorInvalidAuthorization

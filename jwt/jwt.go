@@ -11,35 +11,39 @@ import (
 
 var (
 	ErrorInvalidAuthorization = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid authorization")
+	ErrorInvalidSignatureMethod = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid signature method")
+	ErrorInvalidJwtAlgorithm = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid signature method")
+	ErrorClaimsValidation = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "error on claims validation")
 )
 
 type KeyFunc func(*Token) (interface{}, error)
+type CheckFunc func(Claims) (bool, error)
 
 type Token struct {
-	raw string
+	raw string `json:"raw"`
 
-	headers   map[string]interface{}
-	payload   string
-	signature string
+	headers   map[string]interface{} `json:"headers"`
+	payload   string                 `json:"payload"`
+	signature string                 `json:"signature"`
 
-	claims claims
+	claims Claims
 	method signatureMethod
 }
 
-func New(signatureMethod string) *Token {
-	method := signatureMethods[signatureMethod]
+func New(signature signature) *Token {
+	method := signatureMethods[signature]
 
 	return &Token{
 		headers: map[string]interface{}{
 			constJwtTypeKey:      constJwtTypeJwt,
 			constJwtAlgorithmKey: method.Algorithm(),
 		},
-		claims: claims{},
+		claims: Claims{},
 		method: method,
 	}
 }
 
-func (t *Token) Generate(claims claims, key interface{}) (string, error) {
+func (t *Token) Generate(claims Claims, key interface{}) (string, error) {
 	t.claims = claims
 
 	headersMarshal, err := json.Marshal(t.headers)
@@ -62,66 +66,68 @@ func (t *Token) Generate(claims claims, key interface{}) (string, error) {
 	return strings.Join([]string{headerAndClaims, signature}, "."), nil
 }
 
-func Check(tokenString string, keyFunc KeyFunc, claims claims, skipClaims bool) error {
-	token := &Token{raw: tokenString}
+func Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
+	token := &Token{raw: tokenString, headers: make(map[string]interface{}), claims: claims}
 
 	split := strings.Split(tokenString, ".")
 	if len(split) != 3 {
-		return ErrorInvalidAuthorization
+		return false, nil
 	}
 
 	// headers
 	decodedHeader, err := decode(split[0])
 	if err != nil {
-		return ErrorInvalidAuthorization
+		return false, err
 	}
 
-	if err = json.Unmarshal(decodedHeader, token.headers); err != nil {
-		return ErrorInvalidAuthorization
+	if err = json.Unmarshal(decodedHeader, &token.headers); err != nil {
+		return false, err
 	}
 
-	// claims
+	// Claims
 	token.claims = claims
 
 	decodedClaims, err := decode(split[1])
 	if err != nil {
-		return ErrorInvalidAuthorization
+		return false, err
 
 	}
 
-	if err = json.Unmarshal(decodedClaims, token.claims); err != nil {
-		return ErrorInvalidAuthorization
+	if err = json.Unmarshal(decodedClaims, &token.claims); err != nil {
+		return false, err
 	}
 
 	// signature
 	if method, ok := token.headers[constJwtAlgorithmKey].(string); ok {
-		if token.method, ok = signatureMethods[method]; !ok {
-			return ErrorInvalidAuthorization
+		if token.method, ok = signatureMethods[signature(method)]; !ok {
+			return false, ErrorInvalidSignatureMethod
 		}
 	} else {
-		return ErrorInvalidAuthorization
+		return false, ErrorInvalidJwtAlgorithm
 	}
 
 	// execute keyFunc to get the key
 	key, err := keyFunc(token)
 	if err != nil {
-		return ErrorInvalidAuthorization
+		return false, err
 	}
 
-	// claims
+	// Claims
 	if !skipClaims {
 		if !claims.Validate() {
-			return ErrorInvalidAuthorization
+			return false, ErrorClaimsValidation
 		}
 	}
 
 	// signature validation
 	token.signature = split[2]
-	if err = token.method.Verify(tokenString, token.signature, key); err != nil {
-		return ErrorInvalidAuthorization
+	// header.claims
+	if err = token.method.Verify(strings.Join(split[0:2], "."), token.signature, key); err != nil {
+		return false, err
 	}
 
-	return nil
+	// check claims
+	return checkFunc(token.claims)
 }
 
 func encode(seg []byte) string {

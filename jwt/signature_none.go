@@ -1,19 +1,14 @@
 package jwt
 
-type SignatureNone struct{}
-
-type unsafeNoneMagicConstant string
-
-const UnsafeAllowNoneSignatureType unsafeNoneMagicConstant = "none signing method allowed"
-
-func (m *SignatureNone) Algorithm() string {
-	return "none"
+type SignatureNone struct {
+	Name string
 }
 
-func (m *SignatureNone) Verify(signatureString, signature string, key interface{}) (err error) {
-	if _, ok := key.(unsafeNoneMagicConstant); !ok {
-		return ErrorInvalidAuthorization
-	}
+func (sg *SignatureNone) Algorithm() string {
+	return sg.Name
+}
+
+func (sg *SignatureNone) Verify(signatureString, signature string, key interface{}) (err error) {
 	if signature != "" {
 		return ErrorInvalidAuthorization
 	}
@@ -21,9 +16,6 @@ func (m *SignatureNone) Verify(signatureString, signature string, key interface{
 	return nil
 }
 
-func (m *SignatureNone) Signature(signatureString string, key interface{}) (string, error) {
-	if _, ok := key.(unsafeNoneMagicConstant); ok {
-		return "", nil
-	}
-	return "", ErrorInvalidAuthorization
+func (sg *SignatureNone) Signature(signatureString string, key interface{}) (string, error) {
+	return "", nil
 }
