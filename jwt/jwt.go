@@ -30,8 +30,12 @@ type Token struct {
 	method isignature
 }
 
-func New(signature signature) *Token {
-	method := signatureMethods[signature]
+func New(signature ...signature) *Token {
+	method := signatureMethods[SignatureHS384]
+
+	if signature != nil && len(signature) > 0 {
+		method = signatureMethods[signature[0]]
+	}
 
 	return &Token{
 		headers: map[string]interface{}{
