@@ -10,10 +10,10 @@ import (
 )
 
 var (
-	ErrorInvalidAuthorization = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid authorization")
+	ErrorInvalidAuthorization   = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid authorization")
 	ErrorInvalidSignatureMethod = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid signature method")
-	ErrorInvalidJwtAlgorithm = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid signature method")
-	ErrorClaimsValidation = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "error on claims validation")
+	ErrorInvalidJwtAlgorithm    = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "invalid signature method")
+	ErrorClaimsValidation       = errors.New(errors.ErrorLevel, http.StatusUnauthorized, "error on claims validation")
 )
 
 type KeyFunc func(*Token) (interface{}, error)
@@ -66,7 +66,7 @@ func (t *Token) Generate(claims Claims, key interface{}) (string, error) {
 	return strings.Join([]string{headerAndClaims, signature}, "."), nil
 }
 
-func Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
+func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
 	token := &Token{raw: tokenString, headers: make(map[string]interface{}), claims: claims}
 
 	split := strings.Split(tokenString, ".")
