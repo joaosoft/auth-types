@@ -44,6 +44,7 @@ func jwtAuth() {
 
 	fmt.Printf("Generated JWT Token: %s\n", token)
 
+	// check token
 	keyFunc := func(*jwt.Token) (interface{}, error) {
 		return []byte("bananas"), nil
 	}
@@ -56,7 +57,6 @@ func jwtAuth() {
 		return false, fmt.Errorf("invalid jwt session token")
 	}
 
-	// check token
 	valid, err := jwt.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
 
 	if !valid {
