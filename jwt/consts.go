@@ -13,6 +13,6 @@ const (
 	CLaimsJwtId       = "jti"
 
 	ClaimsIssuedAtKey  = "iat"
-	ClaimsExpiredAtKey = "exp"
+	ClaimsExpireAtKey  = "exp"
 	ClaimsNotBeforeKey = "nbf"
 )

@@ -19,7 +19,7 @@ func (c Claims) Validate() bool {
 }
 
 func (c Claims) checkExpiredAt(now int64) bool {
-	if value, ok := c[ClaimsExpiredAtKey]; ok {
+	if value, ok := c[ClaimsExpireAtKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {
 			return false
