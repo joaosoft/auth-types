@@ -58,7 +58,7 @@ func jwtAuth() {
 	valid, err := jwt.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
 
 	if !valid {
-		panic("then jwt session should be valid")
+		panic("the jwt session should be valid")
 	}
 
 	if err != nil {
