@@ -61,7 +61,7 @@ func basicAuth() {
 	}
 
 	if !ok {
-		panic("invalid basic authentication")
+		panic(session)
 	}
 }
 

@@ -1,12 +1,18 @@
 package jwt
 
 const (
-	constJwtTypeJwt = "JWT"
+	constHeaderTypeJwt = "JWT"
 
-	constJwtAlgorithmKey = "alg"
-	constJwtTypeKey      = "typ"
+	HeaderTypeKey        = "typ"
+	HeaderAlgorithmKey   = "alg"
+	HeaderContentTypeKey = "cty"
 
-	constClaimsIssuedAtKey  = "iat"
-	constClaimsExpiredAtKey = "exp"
-	constClaimsNotBeforeKey = "nbf"
+	ClaimsUssuerKey   = "iss"
+	ClaimsSubjectKey  = "sub"
+	ClaimsAudienceKey = "aud"
+	CLaimsJwtId       = "jti"
+
+	ClaimsIssuedAtKey  = "iat"
+	ClaimsExpiredAtKey = "exp"
+	ClaimsNotBeforeKey = "nbf"
 )

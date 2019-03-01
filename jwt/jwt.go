@@ -35,8 +35,8 @@ func New(signature signature) *Token {
 
 	return &Token{
 		headers: map[string]interface{}{
-			constJwtTypeKey:      constJwtTypeJwt,
-			constJwtAlgorithmKey: method.Algorithm(),
+			HeaderTypeKey:      constHeaderTypeJwt,
+			HeaderAlgorithmKey: method.Algorithm(),
 		},
 		claims: Claims{},
 		method: method,
@@ -98,7 +98,7 @@ func Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Clai
 	}
 
 	// signature
-	if method, ok := token.headers[constJwtAlgorithmKey].(string); ok {
+	if method, ok := token.headers[HeaderAlgorithmKey].(string); ok {
 		if token.method, ok = signatureMethods[signature(method)]; !ok {
 			return false, ErrorInvalidSignatureMethod
 		}

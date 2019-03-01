@@ -19,7 +19,7 @@ func (c Claims) Validate() bool {
 }
 
 func (c Claims) checkExpiredAt(now int64) bool {
-	if value, ok := c[constClaimsExpiredAtKey]; ok {
+	if value, ok := c[ClaimsExpiredAtKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {
 			return false
@@ -34,7 +34,7 @@ func (c Claims) checkExpiredAt(now int64) bool {
 }
 
 func (c Claims) checkIssuedAt(now int64) bool {
-	if value, ok := c[constClaimsIssuedAtKey]; ok {
+	if value, ok := c[ClaimsIssuedAtKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {
 			return false
@@ -48,7 +48,7 @@ func (c Claims) checkIssuedAt(now int64) bool {
 }
 
 func (c Claims) checkNotBefore(now int64) bool {
-	if value, ok := c[constClaimsNotBeforeKey]; ok {
+	if value, ok := c[ClaimsNotBeforeKey]; ok {
 		intValue, err := strconv.ParseInt(fmt.Sprintf("%+v", value), 10, 64)
 		if err != nil {
 			return false
