@@ -23,7 +23,7 @@ Http authentication implementations.
 * HS512
 * NONE 
 
->## WST (Web Security Token)
+## WST (Web Security Token)
 This method is similar to JWT but allows you to define multiple encodings to encode the message making your message complex to decode.
 
 ## WST Encodings
