@@ -1,4 +1,4 @@
-package jwt
+package wst
 
 import (
 	"encoding/json"
@@ -30,8 +30,19 @@ type Token struct {
 	encoders []iencoder
 }
 
-func New(signature signature) *Token {
+func New(signature signature, encoderType encodeType, encoderTypes ...encodeType) *Token {
 	method := signatureMethods[signature]
+
+	encoders := make([]iencoder, 0)
+	if encoder1, ok := encoderMethods[encoderType]; ok {
+		encoders = append(encoders, encoder1)
+	}
+
+	for _, encoderType := range encoderTypes {
+		if encoderN, ok := encoderMethods[encoderType]; ok {
+			encoders = append(encoders, encoderN)
+		}
+	}
 
 	return &Token{
 		headers: map[string]interface{}{
@@ -40,7 +51,7 @@ func New(signature signature) *Token {
 		},
 		claims:   Claims{},
 		method:   method,
-		encoders: []iencoder{encoderMethods[EncodeBase64]},
+		encoders: encoders,
 	}
 }
 

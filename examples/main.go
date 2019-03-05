@@ -3,12 +3,14 @@ package main
 import (
 	"auth-types/basic"
 	"auth-types/jwt"
+	"auth-types/wst"
 	"fmt"
 )
 
 func main() {
 	basicAuth()
 	jwtAuth()
+	wstAuth()
 }
 
 func basicAuth() {
@@ -55,10 +57,45 @@ func jwtAuth() {
 		return false, fmt.Errorf("invalid jwt session token")
 	}
 
-	valid, err := jwt.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
+	valid, err := j.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
 
 	if !valid {
 		panic("the jwt session should be valid")
+	}
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func wstAuth() {
+	// generate new token
+	w := wst.New(wst.SignatureHS384, wst.EncodeBase64, wst.EncodeBase32, wst.EncodeBase64, wst.EncodeHexadecimal)
+	claims := wst.Claims{"name": "joao", "age": 30}
+	token, err := w.Generate(claims, "bananas")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Generated WST Token: %s\n", token)
+
+	// check token
+	keyFunc := func(*wst.Token) (interface{}, error) {
+		return []byte("bananas"), nil
+	}
+
+	checkFunc := func(c wst.Claims) (bool, error) {
+		if claims["name"] == c["name"].(string) &&
+			claims["age"] == int(c["age"].(float64)) {
+			return true, nil
+		}
+		return false, fmt.Errorf("invalid jwt session token")
+	}
+
+	valid, err := w.Check(token, keyFunc, checkFunc, wst.Claims{}, true)
+
+	if !valid {
+		panic("the wst session should be valid")
 	}
 
 	if err != nil {

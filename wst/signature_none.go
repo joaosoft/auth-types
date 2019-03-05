@@ -1,4 +1,4 @@
-package jwt
+package wst
 
 type signatureNone struct {
 	Name string
