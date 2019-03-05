@@ -82,8 +82,13 @@ func (t *Token) Generate(claims Claims, key interface{}) (string, error) {
 	return strings.Join([]string{string(headerAndClaims), signatureEncoded}, "."), nil
 }
 
-func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
-	token := &Token{raw: tokenString, headers: make(map[string]interface{}), claims: claims}
+func Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, claims Claims, skipClaims bool) (bool, error) {
+	token := &Token{
+		raw:      tokenString,
+		headers:  make(map[string]interface{}),
+		claims:   claims,
+		encoders: []iencoder{encoderMethods[EncodeBase64]},
+	}
 
 	split := strings.Split(tokenString, ".")
 	if len(split) != 3 {
@@ -91,7 +96,7 @@ func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, 
 	}
 
 	// headers
-	decodedHeader, err := t.decode(split[0])
+	decodedHeader, err := token.decode(split[0])
 	if err != nil {
 		return false, err
 	}
@@ -103,7 +108,7 @@ func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, 
 	// Claims
 	token.claims = claims
 
-	decodedClaims, err := t.decode(split[1])
+	decodedClaims, err := token.decode(split[1])
 	if err != nil {
 		return false, err
 
@@ -136,7 +141,7 @@ func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, 
 	}
 
 	// signature validation
-	sig, err := t.decode(split[2])
+	sig, err := token.decode(split[2])
 	if err != nil {
 		return false, err
 	}
