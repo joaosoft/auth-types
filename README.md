@@ -5,17 +5,8 @@ Http authentication implementations.
 
 ## With authentication types
 * basic
-* jwt (json web token)
-* wst (web security token) [personal implementation]
-
-## WST (web security token)
-This method is similar to JWT but allows you to define multiple encodings to encode the message making your message complex to decode.
-
-## WST Encodings
-* Base32
-* Base64
-* Hexadecimal
-* ASCII85
+* jwt (Json Web Token)
+* wst (Web Security Token) [personal implementation]
 
 ## With signatures
 * ES256
@@ -31,6 +22,15 @@ This method is similar to JWT but allows you to define multiple encodings to enc
 * HS384
 * HS512
 * NONE 
+
+>## WST (Web Security Token)
+This method is similar to JWT but allows you to define multiple encodings to encode the message making your message complex to decode.
+
+## WST Encodings
+* Base32
+* Base64
+* Hexadecimal
+* ASCII85
 
 ###### If i miss something or you have something interesting, please be part of this project. Let me know! My contact is at the end.
 
