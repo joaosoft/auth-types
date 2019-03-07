@@ -31,6 +31,7 @@ This method is similar to JWT but allows you to define multiple encodings to enc
 * Base64
 * Hexadecimal
 * ASCII85
+* Cipher (with 32bit secret key, can be changed using ```wst.WithCipherSecret([]byte("my personal super secret key !!!"))```)
 
 ###### If i miss something or you have something interesting, please be part of this project. Let me know! My contact is at the end.
 
@@ -51,6 +52,7 @@ This examples are available in the project at [auth-types/examples](https://gith
 
 ```go
 func main() {
+	wst.WithCipherSecret([]byte("my personal super secret key !!!"))
 	basicAuth()
 	jwtAuth()
 	wstAuth()
@@ -113,7 +115,7 @@ func jwtAuth() {
 
 func wstAuth() {
 	// generate new token
-	w := wst.New(wst.SignatureHS384, wst.EncodeAscii85, wst.EncodeBase32, wst.EncodeBase64, wst.EncodeHexadecimal)
+	w := wst.New(wst.SignatureHS384, wst.EncodeAscii85, wst.EncodeBase32, wst.EncodeBase64, wst.EncodeHexadecimal, wst.EncodeCipher)
 	claims := wst.Claims{"name": "joao", "age": 30}
 	token, err := w.Generate(claims, "bananas")
 	if err != nil {
@@ -151,7 +153,7 @@ func wstAuth() {
 ```
 Generated Basic Token: am9hbzpyaWJlaXJv
 Generated JWT Token: eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJhZ2UiOjMwLCJuYW1lIjoiam9hbyJ9.IBjoIfFYFyqNIdBGIaZFT9aamswR4Hm0exoULbfZAqgampskcI3pldAz2wOKq1q5
-Generated WST Token: 536b4a4a56316b7a536c684a535664565631464c4e4568424d6c645255454a4a52305a5256456c545446464a576b4e5951316f795455644f546c4d30545552565346465452564659575430.536b4a4a56316b7a536c4e4a526b5a585655777a54456443526b4e46556b524553554531566b6c56556b4e48546b35544e6c424457456c424e56644a55466f30.5445704e52464e56576b68464e555a554e464d7a5355744754456456535449315445705856304e58516c5a49536b354854314255546b6c4e56566846576c4a4654306c615645565555303146536c68575230314b4d30315754465a42536b4e4654454a4355304e4a53304e4f56566c4751566854556b35435330565a4d307331
+Generated WST Token: AAAAAAAAAAAAAAAAAAAAAPD5SB9mKc7r8gj6AhlWsBUresOMBA5Yv0pB9at09CaBKsRTjwXmnvi-_Mm-15DUvSqpe5dRnfw2KImko7Us-QdKPqHqri8P3FnSdx9Tpo6OAWUa38jp_PrbnKX4l_aG_UaDFpW1Lhc7H6kF_C7UhNXJlu5sxjLk58kyVyhLWSClJWKF2FuY6Iirf7hFtwSoArfgbj6AVw.AAAAAAAAAAAAAAAAAAAAAPD5SB9mKc7r8gj6AhlWsBUresOMBlNYv0pA9v93oSaPf_UX4TckvvN57ZzAdh7r0ew13VYgIt-RNINREFrYQdtMGwkb9U5KnwP0AZKM5uOLnP6oq8BRupqoGK9c5KXR5U7_YbvW7RDexQngImWyAz7ZuebXXxHnmIhrZIWgBATE.AAAAAAAAAAAAAAAAAAAAAPD-SB9mfs--8gz6AxwNsxFzUZetOMebRkpcMl9fXCIU_FNjBEYx3LS1DxSCbuOKDyzSWcGicvTVuYBRBc_uwApyhtsB0QbQ5pc2J-t69WSPT1eB7uECwjuKAeM8GPEZvzKlc4MBt7bXkOG7meAfUDaOLbNt2fD6KX7bLhdKvsJbE8L6kJKJZeG9bM1NfsU43uUVDcVjbVdvMiyE3z13O8OzkRlM_93nmozT5RGGRvGdlRI_1atJpNMm_KrS9M-9XxLUKfRROKRHfR7adObLzq4_wMsJs_bPSUVOgmcydD24yOK3tFrLB958BLSVW82bFiJ1vCNtgD7MDf_sScdpf9I
 ```
 
 ## Known issues

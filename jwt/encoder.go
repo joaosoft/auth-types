@@ -1,7 +1,7 @@
 package jwt
 
 const (
-	EncodeBase64      encodeType = "BASE64"
+	EncodeBase64 encodeType = "base64"
 )
 
 type encodeType string
