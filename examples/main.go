@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	wst.WithCipherSecret([]byte("my personal super secret key !!!"))
 	basicAuth()
 	jwtAuth()
 	wstAuth()
@@ -70,6 +69,8 @@ func jwtAuth() {
 }
 
 func wstAuth() {
+	wst.WithCipherSecret([]byte("my personal super secret key !!!"))
+
 	// generate new token
 	w := wst.New(wst.SignatureHS384, wst.EncodeAscii85, wst.EncodeBase32, wst.EncodeBase64, wst.EncodeHexadecimal, wst.EncodeCipher)
 	claims := wst.Claims{"name": "joao", "age": 30}
