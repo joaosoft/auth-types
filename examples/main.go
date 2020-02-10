@@ -66,10 +66,6 @@ func jwtAuth() {
 	if !valid {
 		panic("the jwt session should be valid")
 	}
-
-	if err != nil {
-		panic(err)
-	}
 }
 
 func wstAuth() {
@@ -113,9 +109,5 @@ func wstAuth() {
 
 	if !valid {
 		panic("the wst session should be valid")
-	}
-
-	if err != nil {
-		panic(err)
 	}
 }
