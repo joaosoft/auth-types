@@ -3,13 +3,15 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:e9a79b1d50da57aaa4090f8a5e99299b31195aaac37f170c2fe5b17669b78700"
   name = "github.com/joaosoft/errors"
   packages = ["."]
+  pruneopts = "UT"
   revision = "dd98851e0d4f418b451d921259cfee63f93864dc"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "89b904e3e97d3a0043f2252eb50d8c47d79eab82ad3314b3cdcd190fddd1dc1a"
+  input-imports = ["github.com/joaosoft/errors"]
   solver-name = "gps-cdcl"
   solver-version = 1

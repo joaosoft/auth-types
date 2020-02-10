@@ -47,7 +47,7 @@ func New(signature signature, encoderType encodeType, encoderTypes ...encodeType
 
 	return &Token{
 		headers: map[string]interface{}{
-			HeaderTypeKey:      constHeaderTypeJwt,
+			HeaderTypeKey:      HeaderTypeWst,
 			HeaderAlgorithmKey: method.Algorithm(),
 		},
 		claims:   Claims{},
@@ -112,7 +112,7 @@ func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, 
 		return false, err
 	}
 
-	// Claims
+	// claims
 	token.claims = claims
 
 	decodedClaims, err := t.decode(split[1])
@@ -140,7 +140,7 @@ func (t *Token) Check(tokenString string, keyFunc KeyFunc, checkFunc CheckFunc, 
 		return false, err
 	}
 
-	// Claims
+	// claims
 	if !skipClaims {
 		if !claims.Validate() {
 			return false, ErrorClaimsValidation
