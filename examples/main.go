@@ -59,6 +59,10 @@ func jwtAuth() {
 
 	valid, err := jwt.Check(token, keyFunc, checkFunc, jwt.Claims{}, true)
 
+	if err != nil {
+		panic(err)
+	}
+
 	if !valid {
 		panic("the jwt session should be valid")
 	}
@@ -102,6 +106,10 @@ func wstAuth() {
 	}
 
 	valid, err := w.Check(token, keyFunc, checkFunc, wst.Claims{}, true)
+
+	if err != nil {
+		panic(err)
+	}
 
 	if !valid {
 		panic("the wst session should be valid")
