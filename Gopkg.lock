@@ -3,11 +3,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:e9a79b1d50da57aaa4090f8a5e99299b31195aaac37f170c2fe5b17669b78700"
+  digest = "1:16448cc34c274f3c9644f235517f28562263e7029e58c2e388652fac2e109164"
   name = "github.com/joaosoft/errors"
   packages = ["."]
   pruneopts = "UT"
-  revision = "dd98851e0d4f418b451d921259cfee63f93864dc"
+  revision = "5be0a9d62458e8b47c998d0b36192a629f55786f"
 
 [solve-meta]
   analyzer-name = "dep"
