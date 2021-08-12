@@ -1,5 +1,11 @@
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/joaosoft/auth-types/basic v0.0.0-20210812104234-6479312055ce h1:al/T+HUlHd9KmmN1+nLEUIK0KJPwHVhFORi/tAsiZrs=
+github.com/joaosoft/auth-types/basic v0.0.0-20210812104234-6479312055ce/go.mod h1:dFguvkj6+2UgeOlWG/ehIrLCi1zX5mkcjgcpZKWJuQA=
+github.com/joaosoft/auth-types/jwt v0.0.0-20210812104234-6479312055ce h1:0POGOs+NYMLMd/ec6WMm6syVGaVKl3wq08ILcN3cO1Y=
+github.com/joaosoft/auth-types/jwt v0.0.0-20210812104234-6479312055ce/go.mod h1:MUESY8AsPPgrG7wusDrQXEhgfQzTk4pIZroUZKjxXKY=
+github.com/joaosoft/auth-types/wst v0.0.0-20210812104234-6479312055ce h1:AjJWGplJB3yL9JIPX5gevLwZ511ZGDCUVTn96BatFKk=
+github.com/joaosoft/auth-types/wst v0.0.0-20210812104234-6479312055ce/go.mod h1:ZgUb10WES9juMS8NVCbCcA1MMCz12BcvNZ1h4JgUipI=
 github.com/joaosoft/errors v0.0.0-20210812101433-f58fbcc4c1c8 h1:sV8arq0rZeoUcH4sY1YLrEIHUNLX0GEGrF4P77WZjVY=
 github.com/joaosoft/errors v0.0.0-20210812101433-f58fbcc4c1c8/go.mod h1:88WoG5oDStLTaG0n5e8NR0rKcugZttofMwD5cajQnTA=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
