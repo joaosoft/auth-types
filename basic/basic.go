@@ -3,7 +3,7 @@ package basic
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/joaosoft/errors"
+	"errors"
 	"net/http"
 	"strings"
 )

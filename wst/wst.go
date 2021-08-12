@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/joaosoft/errors"
+	"errors"
 )
 
 var (
