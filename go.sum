@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/joaosoft/errors v0.0.0-20210515073613-8e002061f860 h1:POtvuXC9DmJBxqdjrpzvkqEIu8wlaVOTwcG7a0L1dvI=
-github.com/joaosoft/errors v0.0.0-20210515073613-8e002061f860/go.mod h1:59hTnLhDO2NBM06F43f7ZsKzEqTAxYy5cVOB6+1zKfQ=
+github.com/joaosoft/errors v0.0.0-20210812090922-62665c1c4345 h1:ZRpROFiSTqbG9tJLDxjuSHNj9yfnBNlILYYaUcoAWdg=
+github.com/joaosoft/errors v0.0.0-20210812090922-62665c1c4345/go.mod h1:88WoG5oDStLTaG0n5e8NR0rKcugZttofMwD5cajQnTA=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
