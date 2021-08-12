@@ -1,9 +1,9 @@
 package main
 
 import (
-	"auth-types/basic"
-	"auth-types/jwt"
-	"auth-types/wst"
+	"github.com/joaosoft/auth-types/basic"
+	"github.com/joaosoft/auth-types/jwt"
+	"github.com/joaosoft/auth-types/wst"
 	"fmt"
 )
 
