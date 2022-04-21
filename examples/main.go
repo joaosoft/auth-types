@@ -1,10 +1,11 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/joaosoft/auth-types/basic"
 	"github.com/joaosoft/auth-types/jwt"
 	"github.com/joaosoft/auth-types/wst"
-	"fmt"
 )
 
 func main() {
